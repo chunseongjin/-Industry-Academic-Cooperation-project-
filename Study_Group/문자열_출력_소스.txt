@@ -1,5 +1,5 @@
-# ¹®ÀÚ¿­(±ÛÀÚ) Ãâ·Â putText ÇÔ¼ö »ç¿ë ¹æ¹ı¿¡ ´ëÇÑ Âü°íÀÚ·á
-# ¿øº» ÀÚ·á : https://webnautes.tistory.com/1212
+# ë¬¸ìì—´(ê¸€ì) ì¶œë ¥ putText í•¨ìˆ˜ ì‚¬ìš© ë°©ë²•ì— ëŒ€í•œ ì°¸ê³ ìë£Œ
+# ì›ë³¸ ìë£Œ : https://webnautes.tistory.com/1212
 
 import numpy as np
 import cv2 as cv
