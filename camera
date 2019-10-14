@@ -1,3 +1,4 @@
+원본링크 : https://blog.naver.com/PostView.nhn?blogId=chandong83&logNo=221291349712&categoryNo=29&parentCategoryNo=0&viewDate=&currentPage=1&postListTopCurrentPage=1&from=search
 import cv2
 import numpy as np
 from os import listdir
