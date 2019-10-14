@@ -8,7 +8,7 @@ This is a temporary script file.
 import cv2
 import numpy as np
 
- #ROI -> °ü½É¿µ¿ª, ¿µ»óÃ³¸®ÇÒ¶§ ¾²´Â º¸ÆíÀû ¿ë¾î
+ #ROI -> ê´€ì‹¬ì˜ì—­, ì˜ìƒì²˜ë¦¬í• ë•Œ ì“°ëŠ” ë³´í¸ì  ìš©ì–´
 tracker = cv2.TrackerCSRT_create()
 video = cv2.createBackgroundSubtractorMOG2()
 rect = None
@@ -18,11 +18,11 @@ cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
 
 def ROI_setting():
-    ret, img = cap.read()     #Ã¹ ÇÁ·¹ÀÓÀ» ÀĞ´Â´Ù
-    cv2.namedWindow('Select Window')  #ROI¼³Á¤
+    ret, img = cap.read()     #ì²« í”„ë ˆì„ì„ ì½ëŠ”ë‹¤
+    cv2.namedWindow('Select Window')  #ROIì„¤ì •
     cv2.imshow('Select Window', img);
-    #setting ROI(¾î´À window, Ä¸, ¼¾ÅÍ½ÃÀÛx, Áß½ÉÁ¡)
-    rect = cv2.selectROI('Select Window', img, fromCenter = False, showCrosshair=True) #cv2.selectROI() ROI¸¦ ¼³Á¤ÇÏ¿© rect·Î ¹İÈ¯
+    #setting ROI(ì–´ëŠ window, ìº¡, ì„¼í„°ì‹œì‘x, ì¤‘ì‹¬ì )
+    rect = cv2.selectROI('Select Window', img, fromCenter = False, showCrosshair=True) #cv2.selectROI() ROIë¥¼ ì„¤ì •í•˜ì—¬ rectë¡œ ë°˜í™˜
     print(rect)
     cv2.destroyWindow('Select Window'); 
     return rect
@@ -30,23 +30,23 @@ def ROI_setting():
 
 def main():
     check_ROI = True
-    #Àß ¿¬°áÀÌ µÇ¾ú´ÂÁö È®ÀÎ ¾ÈµÇ¾îÀÖ´Ù¸é Á¾·á
+    #ì˜ ì—°ê²°ì´ ë˜ì—ˆëŠ”ì§€ í™•ì¸ ì•ˆë˜ì–´ìˆë‹¤ë©´ ì¢…ë£Œ
     if not cap.isOpened():
         exit()
     #=======================================
     while True:
-        ret, img = cap.read();   #cap.read¸¦ ÅëÇØ ÇÑÇÁ·¹ÀÓ¾¿ ÀĞ°í img¿¡ ÀúÀå
+        ret, img = cap.read();   #cap.readë¥¼ í†µí•´ í•œí”„ë ˆì„ì”© ì½ê³  imgì— ì €ì¥
 
-        #==========ROI Setting ¹× tracker ÃÊ±âÈ­==========
+        #==========ROI Setting ë° tracker ì´ˆê¸°í™”==========
         if check_ROI == True:
-            tracker.init(img, ROI_setting());        #tracker ÃÊ±âÈ­
+            tracker.init(img, ROI_setting());        #tracker ì´ˆê¸°í™”
             print(tracker)
             check_ROI = False
         #=================================================        
-        success, box = tracker.update(img);          #¼º°ø½Ã successº¯¼ö¿¡ true ½ÇÆĞ½Ã false ¹İÈ¯ box = rectÇüÅÂ·Î ¹Ş´Â´Ù
+        success, box = tracker.update(img);          #ì„±ê³µì‹œ successë³€ìˆ˜ì— true ì‹¤íŒ¨ì‹œ false ë°˜í™˜ box = rectí˜•íƒœë¡œ ë°›ëŠ”ë‹¤
         
         #print(success);
-        left, top, w, h = [int(v) for v in box]      #¿ŞÂÊ,À§ÂÊ,³Êºñ,³ôÀÌ ¼ø¼­
+        left, top, w, h = [int(v) for v in box]      #ì™¼ìª½,ìœ„ìª½,ë„ˆë¹„,ë†’ì´ ìˆœì„œ
         cv2.rectangle(img, pt1 = (left, top), pt2 = (left + w, top + h), color=(255,255,255), thickness = 3)
        
         mask = video.apply(img)
@@ -57,8 +57,8 @@ def main():
         else:
             print('-------------------------')
         
-        cv2.imshow('img', img)                   #À©µµ¿ì¿¡ ¿µ»ó Àç»ı
-        if cv2.waitKey(1) & 0xFF == 27: break    #Å°º¸µå esc ÀÔ·Â½Ã Á¾·á
+        cv2.imshow('img', img)                   #ìœˆë„ìš°ì— ì˜ìƒ ì¬ìƒ
+        if cv2.waitKey(1) & 0xFF == 27: break    #í‚¤ë³´ë“œ esc ì…ë ¥ì‹œ ì¢…ë£Œ
         if cv2.waitKey(30) == ord('q'): check_ROI = True
             
     cap.release()
