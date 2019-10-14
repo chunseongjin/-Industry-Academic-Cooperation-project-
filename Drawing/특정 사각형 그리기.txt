@@ -1,0 +1,26 @@
+# 도형 그리기 OpenSource
+# 원본 자료 : https://webnautes.tistory.com/1209
+
+import numpy as np
+import cv2 as cv
+
+
+# 컬러 이미지를 저장할 넘파이 배열을 생성합니다.
+width = 500
+height = 500
+bpp = 3
+
+img = np.zeros((height, width, bpp), np.uint8)
+
+
+# 선굵기 3인 빨간색 사각형을 그립니다.  
+
+cv.rectangle(img, (50, 50),  (450, 450), (0, 0, 255), 3)
+
+
+# 내부가 파란색으로 채워진 사각형을 그립니다. 
+cv.rectangle(img, (150, 200), (250, 300), (255, 0, 0), -1)
+
+
+cv.imshow("result", img)
+cv.waitKey(0);
