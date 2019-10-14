@@ -9,7 +9,7 @@ drawing = False
 rect = False
 x1, x2, y1, y2 = -1,-1,-1,-1
 
-def onMouseClick(event, x, y , flags, param): #¸¶¿ì½º ¿ŞÂÊ ¹öÆ°ÀÌ ´­·ÈÀ»¶§ 
+def onMouseClick(event, x, y , flags, param): #ë§ˆìš°ìŠ¤ ì™¼ìª½ ë²„íŠ¼ì´ ëˆŒë ¸ì„ë•Œ 
     global x1, x2, y1, y2, drawing, rect
     
     if event == cv2.EVENT_LBUTTONDOWN:      
