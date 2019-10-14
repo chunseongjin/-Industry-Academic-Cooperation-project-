@@ -1,0 +1,21 @@
+원본파일:https://m.blog.naver.com/PostView.nhn?blogId=kge1381&logNo=221172911383&proxyReferer=https%3A%2F%2Fwww.google.com%2F
+import cv2
+import numpy as np
+
+img = cv2.imread('input2.png')
+rows,cols = img.shape[:2]
+
+#generating vingnette mask using Gaussian kernels
+kernel_x = cv2.getGaussianKernel(cols,200)
+kernel_y = cv2.getGaussianKernel(rows,200)
+kernel = kernel_y * kernel_x.T
+mask = 235 * kernel / np.linalg.norm(kernel)
+output = np.copy(img)
+
+#applying the mask to eah channel in the input image
+for i in range(3):
+    output[:,:,i] = output[:,:,i] * mask
+
+cv2.imshow('Original',img)
+cv2.imshow('Vignette',output)
+cv2.waitKey(0)
