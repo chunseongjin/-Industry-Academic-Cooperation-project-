@@ -1,90 +1,47 @@
- # ÀÎÅÍ³İ Âü°í ÀÚ·á 
- # À¥Ä· ¾ó±¼ ÀÎ½Ä ¿ÀÇÂ ¼Ò½º
- # ¿øº» ÀÚ·á : https://hwangpy.tistory.com/2
+ # ì¸í„°ë„· ì°¸ê³  ìë£Œ 
+ # ì›¹ìº  ì–¼êµ´ ì¸ì‹ ì˜¤í”ˆ ì†ŒìŠ¤
+ # ì›ë³¸ ìë£Œ : https://hwangpy.tistory.com/2
 
 import cv2
-
 import numpy as np
 
-#¶óÀÌºê·¯¸® µî·Ï
-
-
-
+#ë¼ì´ë¸ŒëŸ¬ë¦¬ ë“±ë¡
 font = cv2.FONT_HERSHEY_SIMPLEX
 
-#ÆùÆ® µî·Ï
-
-
-
+#í°íŠ¸ ë“±ë¡
 def faceDetect():
-
 	face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 
-#¿µ»ó¿¡¼­ ÀÎ½ÄÇÒ ¼Ò½º µî·Ï
-
-
-
+	#ì˜ìƒì—ì„œ ì¸ì‹í•  ì†ŒìŠ¤ ë“±ë¡
 	try:
-
 		cap=cv2.VideoCapture(0)
 
-#À¥Ä· È°¼ºÈ­½ÃÅ°´Â ÄÚµå
-
-
-
+	#ì›¹ìº  í™œì„±í™”ì‹œí‚¤ëŠ” ì½”ë“œ
 	except:
-
-		print('Ä«¸Ş¶ó ·Îµù ½ÇÆĞ')
-
+		print('ì¹´ë©”ë¼ ë¡œë”© ì‹¤íŒ¨')
 		return
 
-
-
 	while True:
-
 		ret, frame = cap.read()
-
 		if not ret:
-
 			return
-
-			    
-
+			   
 		gray= cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-
 		faces = face_cascade.detectMultiScale(gray, 1.3, 2, 0, (30, 30))
-
    
-
 		for (x,y,w,h) in faces:
-
 			cv2.rectangle(frame,(x,y),(x+w,y+h),(255,0,0),3, 4, 0)
-
 			cv2.putText(frame, 'Detected Face', (x-5, y-5), font, 0.9, (255,255,0),2)
 
-#¾ó±¼À» ÀÎ½ÄÇÏ´Â »ç°¢Çü¿¡ ´ëÇÑ ¼Ò½º, ÅØ½ºÆ® ¼Ò½º
-
-
-
-
-
+		#ì–¼êµ´ì„ ì¸ì‹í•˜ëŠ” ì‚¬ê°í˜•ì— ëŒ€í•œ ì†ŒìŠ¤, í…ìŠ¤íŠ¸ ì†ŒìŠ¤
 		cv2.imshow('frame',frame)
 
-#¿µ»óÀ» Ãâ·ÂÇÏ´Â ¼Ò½º
-
-
-
+		#ì˜ìƒì„ ì¶œë ¥í•˜ëŠ” ì†ŒìŠ¤
 		if cv2.waitKey(1) != 255:
-
                 break;
-
+		
 	cap.release()
-
 	cv2.destroyAllWindows()
 
-#space¸¦ ´©¸£¸é ½ÇÇà Á¾·áµÇ´Â ÄÚµå
-
-
-
+#spaceë¥¼ ëˆ„ë¥´ë©´ ì‹¤í–‰ ì¢…ë£Œë˜ëŠ” ì½”ë“œ
 faceDetect()
-
