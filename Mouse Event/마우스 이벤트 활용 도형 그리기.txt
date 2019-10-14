@@ -1,5 +1,5 @@
-# ¸¶¿ì½º ÀÌº¥Æ®·Î µµÇü ±×¸®±â
-# ¿øº» ÀÚ·á : https://hoony-gunputer.tistory.com/258 
+# ë§ˆìš°ìŠ¤ ì´ë²¤íŠ¸ë¡œ ë„í˜• ê·¸ë¦¬ê¸°
+# ì›ë³¸ ìë£Œ : https://hoony-gunputer.tistory.com/258 
 
 import numpy as np
 import cv2 
