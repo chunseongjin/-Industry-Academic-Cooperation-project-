@@ -1,0 +1,70 @@
+# -*- coding: utf-8 -*-
+"""
+Spyder Editor
+
+This is a temporary script file.
+"""
+
+import cv2
+import numpy as np
+
+ #ROI -> 관심영역, 영상처리할때 쓰는 보편적 용어
+tracker = cv2.TrackerCSRT_create()
+video = cv2.createBackgroundSubtractorMOG2()
+rect = None
+
+cap = cv2.VideoCapture(0);
+cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+
+def ROI_setting():
+    ret, img = cap.read()     #첫 프레임을 읽는다
+    cv2.namedWindow('Select Window')  #ROI설정
+    cv2.imshow('Select Window', img);
+    #setting ROI(어느 window, 캡, 센터시작x, 중심점)
+    rect = cv2.selectROI('Select Window', img, fromCenter = False, showCrosshair=True) #cv2.selectROI() ROI를 설정하여 rect로 반환
+    print(rect)
+    cv2.destroyWindow('Select Window'); 
+    return rect
+    
+
+def main():
+    check_ROI = True
+    #잘 연결이 되었는지 확인 안되어있다면 종료
+    if not cap.isOpened():
+        exit()
+    #=======================================
+    while True:
+        ret, img = cap.read();   #cap.read를 통해 한프레임씩 읽고 img에 저장
+
+        #==========ROI Setting 및 tracker 초기화==========
+        if check_ROI == True:
+            tracker.init(img, ROI_setting());        #tracker 초기화
+            print(tracker)
+            check_ROI = False
+        #=================================================        
+        success, box = tracker.update(img);          #성공시 success변수에 true 실패시 false 반환 box = rect형태로 받는다
+        
+        #print(success);
+        left, top, w, h = [int(v) for v in box]      #왼쪽,위쪽,너비,높이 순서
+        cv2.rectangle(img, pt1 = (left, top), pt2 = (left + w, top + h), color=(255,255,255), thickness = 3)
+       
+        mask = video.apply(img)
+        
+        cv2.imshow('Motion Found', mask)
+        if np.sum(mask)>=70000:
+            print('Motion found')
+        else:
+            print('-------------------------')
+        
+        cv2.imshow('img', img)                   #윈도우에 영상 재생
+        if cv2.waitKey(1) & 0xFF == 27: break    #키보드 esc 입력시 종료
+        if cv2.waitKey(30) == ord('q'): check_ROI = True
+            
+    cap.release()
+    cv2.destroyAllWindows()
+    
+    
+
+    
+main()
